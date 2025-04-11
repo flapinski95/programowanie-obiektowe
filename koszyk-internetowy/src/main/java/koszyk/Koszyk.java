@@ -1,16 +1,19 @@
 package koszyk;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
 import promocje.Promocja;
 import promocje.PromocjaDarmowyKubek;
+import promocje.Promocja5Procent;
+import promocje.PromocjaTrzyZaDwa;
 
 public class Koszyk {
     private List<Promocja> promocje;
     private static List<Product> dodaneProdukty;
+    private List<Promocja> najlepszaKolejnosc; // <-- dodane pole
 
     public Koszyk() {
         this.promocje = new ArrayList<>();
@@ -32,6 +35,54 @@ public class Koszyk {
     public void zastosujPromocje(List<Product> produkty) {
         for (Promocja p : promocje) {
             p.apply(produkty);
+        }
+    }
+
+    public void zastosujNajlepszaKolejnoscPromocji() {
+        List<Product> najlepszeProdukty = null;
+        double najnizszaCena = Double.MAX_VALUE;
+        najlepszaKolejnosc = null;
+
+        List<List<Promocja>> permutacje = permutacjePromocji(promocje);
+
+        for (List<Promocja> permutacja : permutacje) {
+            List<Product> kopia = new ArrayList<>();
+            for (Product p : dodaneProdukty) {
+                kopia.add(new Product(p)); // konstruktor kopiujący
+            }
+
+            for (Promocja p : permutacja) {
+                p.apply(kopia);
+            }
+
+            double cena = calculateTotalPrice(kopia);
+            if (cena < najnizszaCena) {
+                najnizszaCena = cena;
+                najlepszeProdukty = kopia;
+                najlepszaKolejnosc = new ArrayList<>(permutacja);
+            }
+        }
+
+        dodaneProdukty = najlepszeProdukty;
+        promocje = najlepszaKolejnosc;
+    }
+
+    private List<List<Promocja>> permutacjePromocji(List<Promocja> lista) {
+        List<List<Promocja>> wynik = new ArrayList<>();
+        permutacjeRekurencyjnie(lista, 0, wynik);
+        return wynik;
+    }
+
+    private void permutacjeRekurencyjnie(List<Promocja> lista, int index, List<List<Promocja>> wynik) {
+        if (index == lista.size() - 1) {
+            wynik.add(new ArrayList<>(lista));
+            return;
+        }
+
+        for (int i = index; i < lista.size(); i++) {
+            Collections.swap(lista, i, index);
+            permutacjeRekurencyjnie(lista, index + 1, wynik);
+            Collections.swap(lista, i, index);
         }
     }
 
@@ -58,7 +109,7 @@ public class Koszyk {
     public static double calculateTotalPrice(List<Product> produkty) {
         double total = 0;
         for (Product p : produkty) {
-            total += p.price;
+            total += p.discountPrice != null ? p.discountPrice : p.price;
         }
         return total;
     }
@@ -74,6 +125,10 @@ public class Koszyk {
         return sortedProducts;
     }
 
+    public List<Promocja> getNajlepszaKolejnosc() {
+        return najlepszaKolejnosc;
+    }
+
     public static void main(String[] args) {
         Koszyk koszyk = new Koszyk();
 
@@ -85,12 +140,21 @@ public class Koszyk {
         koszyk.dodajProdukt(new Product("P006", "Telewizor 55\"", 3199.00, null));
 
         koszyk.dodajPromocje(new PromocjaDarmowyKubek());
+        koszyk.dodajPromocje(new Promocja5Procent());
+        koszyk.dodajPromocje(new PromocjaTrzyZaDwa());
 
-        koszyk.zastosujPromocje(koszyk.getProdukty());
+        koszyk.zastosujNajlepszaKolejnoscPromocji();
 
         System.out.println("\nPo promocji:");
         for (Product p : koszyk.getProdukty()) {
             System.out.println(p);
+        }
+
+        System.out.println("\nCena końcowa: " + Koszyk.calculateTotalPrice(koszyk.getProdukty()) + " zł");
+
+        System.out.println("\nNajlepsza kolejność promocji:");
+        for (Promocja p : koszyk.getNajlepszaKolejnosc()) {
+            System.out.println("- " + p.getClass().getSimpleName());
         }
     }
 }
