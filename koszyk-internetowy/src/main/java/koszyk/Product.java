@@ -4,7 +4,7 @@ public class Product {
     String code;
     public String name;
     public double price;
-    Double discountPrice ;
+    public Double discountPrice ;
     public Product(Product other) {
         this.code = other.code;
         this.name = other.name;
@@ -20,6 +20,9 @@ public class Product {
 
     @Override
     public String toString() {
+        if (discountPrice == null) {
+            return name + " (" + code + ") - Cena: " + price + " zł";
+        }
         return name + " (" + code + ") - Cena: " + price + " zł, Cena po rabacie: " + discountPrice + " zł";
     }
 

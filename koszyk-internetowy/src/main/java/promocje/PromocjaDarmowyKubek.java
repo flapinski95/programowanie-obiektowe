@@ -1,29 +1,30 @@
 package promocje;
 
+import koszyk.Koszyk;
 import koszyk.Product;
-//import koszyk.Promocja;
 
 import java.util.List;
 
 public class PromocjaDarmowyKubek implements Promocja {
     @Override
     public void apply(List<Product> produkty) {
-        boolean alreadyHasKubek = false;
+        if (!isApplicable(produkty)) return;
+
+        Product kubek = new Product("P007", "Kubek", 20.0, 0.0);
+        produkty.add(kubek);
+        System.out.println("Promocja: darmowy kubek został dodany do koszyka.");
+    }
+
+    @Override
+    public boolean isApplicable(List<Product> produkty) {
+        if (Koszyk.calculateTotalPrice(produkty) < 200.0) return false;
 
         for (Product p : produkty) {
             if (p.name.equalsIgnoreCase("Kubek")) {
-                alreadyHasKubek = true;
-                break;
+                return false;
             }
         }
-
-        if (!alreadyHasKubek) {
-            Product kubek = new Product("P007", "Kubek", 20.0, 0.0);
-            produkty.add(kubek);
-            System.out.println("Promocja: darmowy kubek został dodany do koszyka.");
-        } else {
-            System.out.println("Kubek już znajduje się w koszyku – promocja nie została ponownie zastosowana.");
-        }
+        return true;
     }
 
     @Override

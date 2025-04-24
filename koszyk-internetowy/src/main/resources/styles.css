@@ -1,0 +1,53 @@
+.root {
+    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-background-color: #f9f9f9;
+}
+
+.label {
+    -fx-font-size: 14px;
+    -fx-text-fill: #333;
+}
+
+.text-area, .cart-output {
+    -fx-font-size: 13px;
+    -fx-background-color: white;
+    -fx-padding: 10;
+    -fx-border-color: #ccc;
+}
+
+.button {
+    -fx-background-radius: 4px;
+    -fx-padding: 6 12;
+    -fx-cursor: hand;
+    -fx-font-weight: bold;
+}
+
+.add-button {
+    -fx-background-color: #007bff;
+    -fx-text-fill: white;
+}
+
+.cart-button {
+    -fx-background-color: #28a745;
+    -fx-text-fill: white;
+}
+
+.apply-button {
+    -fx-background-color: #ffc107;
+    -fx-text-fill: black;
+}
+
+.back-button {
+    -fx-background-color: #6c757d;
+    -fx-text-fill: white;
+}
+
+.button:hover {
+    -fx-opacity: 0.85;
+}
+.product-box {
+    -fx-border-color: #ccc;
+    -fx-border-radius: 4px;
+    -fx-padding: 10;
+    -fx-background-color: white;
+}

@@ -5,21 +5,25 @@ import koszyk.Product;
 
 import java.util.List;
 
-public class PromocjaTrzyZaDwa implements Promocja{
+public class PromocjaTrzyZaDwa implements Promocja {
     @Override
     public void apply(List<Product> produkty) {
-        int count = 0;
-        for (Product p : produkty) {
-            if (p.price < 100) {
-                count++;
-            }
-        }
-        if (count >= 3) {
-            Product cheapest = Koszyk.findCheapestProduct(produkty);
+        if (!isApplicable(produkty)) return;
+
+        Product cheapest = Koszyk.findCheapestProduct(produkty.stream()
+                .filter(p -> p.price < 100)
+                .toList());
+
+        if (cheapest != null) {
             cheapest.setDiscountPrice(0.0);
-        } else {
-            System.out.println("Koszyk nie kwalifikuje się do promocji 3 za 2");
+            System.out.println("Zastosowano promocję 3 za 2");
         }
+    }
+
+    @Override
+    public boolean isApplicable(List<Product> produkty) {
+        long count = produkty.stream().filter(p -> p.price < 100).count();
+        return count >= 3;
     }
 
     @Override

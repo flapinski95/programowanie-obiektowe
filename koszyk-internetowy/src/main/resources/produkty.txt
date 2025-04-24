@@ -1,0 +1,51 @@
+Mleko;4.50
+Chleb;3.00
+Masło;6.20
+Jajka;10.99
+Ser żółty;12.50
+Kawa mielona;19.99
+Herbata czarna;9.50
+Woda mineralna;1.99
+Cola 1L;4.80
+Sok pomarańczowy;6.75
+Czekolada mleczna;3.99
+Cukier;3.50
+Mąka pszenna;2.90
+Ryż biały;5.20
+Makaron świderki;4.30
+Konserwa mięsna;8.99
+Parówki z szynki;7.49
+Filet z kurczaka;17.90
+Łosoś wędzony;22.00
+Tuńczyk w puszce;6.80
+Pizza mrożona;11.99
+Zupa instant;2.20
+Jogurt naturalny;2.50
+Śmietana 18%;3.20
+Masło orzechowe;13.49
+Nutella;17.80
+Dżem truskawkowy;5.99
+Chipsy paprykowe;6.30
+Orzeszki ziemne;7.70
+Ciastka owsiane;4.50
+Płatki kukurydziane;7.10
+Ketchup;4.90
+Majonez;5.50
+Musztarda sarepska;3.40
+Oliwa z oliwek;18.20
+Olej rzepakowy;7.60
+Miód naturalny;15.30
+Sól kuchenna;1.20
+Pieprz czarny;2.80
+Cynamon mielony;3.10
+Papryka słodka;2.90
+Curry w proszku;3.60
+Szampon do włosów;11.90
+Mydło w płynie;6.20
+Pasta do zębów;8.40
+Papier toaletowy 8 rol.;16.00
+Ręcznik papierowy;6.90
+Worki na śmieci;5.20
+Bateria AA (4 szt.);9.00
+Zapałki (opak.);1.00
+Laptop;2999.00

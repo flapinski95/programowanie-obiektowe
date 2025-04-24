@@ -128,6 +128,41 @@ public class Koszyk {
     public List<Promocja> getNajlepszaKolejnosc() {
         return najlepszaKolejnosc;
     }
+    public void clearPromocje() {
+        this.promocje.clear();
+    }
+    public void zastosujNajlepszaKolejnoscPromocjiZFiltracją() {
+        List<Product> najlepszeProdukty = null;
+        double najnizszaCena = Double.MAX_VALUE;
+        najlepszaKolejnosc = null;
+
+        List<List<Promocja>> permutacje = permutacjePromocji(promocje);
+
+        for (List<Promocja> permutacja : permutacje) {
+            List<Product> kopia = new ArrayList<>();
+            for (Product p : dodaneProdukty) {
+                kopia.add(new Product(p)); // konstruktor kopiujący
+            }
+
+            List<Promocja> zastosowane = new ArrayList<>();
+            for (Promocja p : permutacja) {
+                if (p.isApplicable(kopia)) {
+                    p.apply(kopia);
+                    zastosowane.add(p);
+                }
+            }
+
+            double cena = calculateTotalPrice(kopia);
+            if (cena < najnizszaCena) {
+                najnizszaCena = cena;
+                najlepszeProdukty = kopia;
+                najlepszaKolejnosc = zastosowane;
+            }
+        }
+
+        dodaneProdukty = najlepszeProdukty;
+        promocje = najlepszaKolejnosc;
+    }
 
     public static void main(String[] args) {
         Koszyk koszyk = new Koszyk();
