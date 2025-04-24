@@ -13,7 +13,7 @@ import promocje.PromocjaTrzyZaDwa;
 public class Koszyk {
     private List<Promocja> promocje;
     private static List<Product> dodaneProdukty;
-    private List<Promocja> najlepszaKolejnosc; // <-- dodane pole
+    private List<Promocja> najlepszaKolejnosc;
 
     public Koszyk() {
         this.promocje = new ArrayList<>();
